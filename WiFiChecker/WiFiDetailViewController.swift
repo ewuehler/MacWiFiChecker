@@ -83,7 +83,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             if (mfg == nil) {
                 bssiddata.SSID = data.SSIDString
                 addManufacturerInfo(urlString: "https://api.macvendors.com/\(bssiddata.mac())", bssidData: bssiddata)
-                sleep(1.05)  // This is here because the API now rate limits to 1 request per second, 1000 per day
+                sleep(1)  // This is here because the API now rate limits to 1 request per second, 1000 per day
             } else {
                 bssiddata.Manufacturer = mfg!
             }

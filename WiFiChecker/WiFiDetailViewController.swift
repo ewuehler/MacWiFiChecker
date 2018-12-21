@@ -83,7 +83,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             if (mfg == nil) {
                 bssiddata.SSID = data.SSIDString
                 addManufacturerInfo(urlString: "https://api.macvendors.com/\(bssiddata.mac())", bssidData: bssiddata)
-                sleep(1)  // This is here because the API now rate limits to 1 request per second, 1000 per day
+                sleep(1.05)  // This is here because the API now rate limits to 1 request per second, 1000 per day
             } else {
                 bssiddata.Manufacturer = mfg!
             }
@@ -104,7 +104,12 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             }
             
             let responseString = String(data: data, encoding: .utf8)
-            bssidData.Manufacturer = responseString ?? "[Unknown]"
+            let result = responseString ?? "[Unknown]"
+            if (result.hasPrefix("{\"errors")) {
+                bssidData.Manufacturer = "[Error]"
+            } else {
+                bssidData.Manufacturer = result
+            }
             print("Found \(bssidData.Manufacturer) for \(bssidData.SSID)")
             DispatchQueue.main.async {
                 self.cachedManufacturerData[bssidData.mac()] = bssidData.Manufacturer

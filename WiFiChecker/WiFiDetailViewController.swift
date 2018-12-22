@@ -27,6 +27,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
     @IBOutlet weak var bssidListTableView: NSTableView!
     @IBOutlet weak var collocatedGroupTableView: NSTableView!
     
+    @IBOutlet weak var bssidProgress: NSProgressIndicator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,20 +76,37 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         bssidListData = data.BSSIDList ?? []
         bssidListTableView.reloadData()
         
-        
+        bssidProgress.isHidden = false
+        bssidProgress.minValue = 0.0
+        bssidProgress.maxValue = Double(self.bssidListData.count)
+        bssidProgress.startAnimation(nil)
+        bssidProgress.doubleValue = 0.0
+        var delay: Double = 0
         // Now loop through the bssidListData and add the manufacturer
-        for bssiddata in bssidListData {
+        for bssiddata in self.bssidListData {
+            delay = delay + 1.1
             // check cache
-            let mfg = cachedManufacturerData[bssiddata.oui()]
+            let mfg = self.cachedManufacturerData[bssiddata.oui()]
             if (mfg == nil) {
-                bssiddata.SSID = data.SSIDString
-                addManufacturerInfo(urlString: "https://api.macvendors.com/\(bssiddata.mac())", bssidData: bssiddata)
-                sleep(1)  // This is here because the API now rate limits to 1 request per second, 1000 per day
+                bssiddata.SSID = self.data.SSIDString
+//                print("Count: \(bssiddata.mac()) (\(count)) - should start \((NSDate().timeIntervalSince1970)+count)")
+                // This is here because the API now rate limits to 1 request per second, 1000 per day
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+//                    print("Starting for \(bssiddata.mac()) at \(NSDate().timeIntervalSince1970)")
+                    self.bssidProgress.increment(by: 1.0)
+                    self.addManufacturerInfo(urlString: "https://api.macvendors.com/\(bssiddata.mac())", bssidData: bssiddata)
+                })
             } else {
                 bssiddata.Manufacturer = mfg!
             }
         }
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay + 2.0, execute: {
+//            print("Finishing it...")
+            self.bssidProgress.stopAnimation(nil)
+            self.bssidProgress.isHidden = true
+            self.bssidProgress.doubleValue = 0.0
+        })
+
         
     }
     
@@ -100,6 +118,9 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             guard let data = data, error == nil else {
                 // TODO: pop a dialog with whatever magic error occurs - or otherwise notify user of boo-boo
                 bssidData.Manufacturer = "[Error retrieving name]"
+                DispatchQueue.main.async {
+                    self.bssidListTableView.reloadData()
+                }
                 return
             }
             
@@ -109,10 +130,12 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
                 bssidData.Manufacturer = "[Error]"
             } else {
                 bssidData.Manufacturer = result
+                if (result != "[Unknown]") {
+                    print("Found \(bssidData.Manufacturer) for \(bssidData.SSID)")
+                    self.cachedManufacturerData[bssidData.mac()] = bssidData.Manufacturer
+                }
             }
-            print("Found \(bssidData.Manufacturer) for \(bssidData.SSID)")
             DispatchQueue.main.async {
-                self.cachedManufacturerData[bssidData.mac()] = bssidData.Manufacturer
                 self.bssidListTableView.reloadData()
             }
         }

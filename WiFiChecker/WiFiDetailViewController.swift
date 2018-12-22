@@ -47,7 +47,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         channelHistoryData.removeAll()
         collocatedGroupData.removeAll()
         bssidListData.removeAll()
-        cachedManufacturerData.removeAll()
+//        cachedManufacturerData.removeAll()
         
         // Populate with new WiFiData
         ssidTextField.stringValue = data.SSIDString
@@ -84,13 +84,13 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         var delay: Double = 0
         // Now loop through the bssidListData and add the manufacturer
         for bssiddata in self.bssidListData {
-            delay = delay + 1.1
             // check cache
-            let mfg = self.cachedManufacturerData[bssiddata.oui()]
+            let mfg = self.cachedManufacturerData[bssiddata.mac()]
             if (mfg == nil) {
                 bssiddata.SSID = self.data.SSIDString
 //                print("Count: \(bssiddata.mac()) (\(count)) - should start \((NSDate().timeIntervalSince1970)+count)")
                 // This is here because the API now rate limits to 1 request per second, 1000 per day
+                delay = delay + 1.1
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
 //                    print("Starting for \(bssiddata.mac()) at \(NSDate().timeIntervalSince1970)")
                     self.bssidProgress.increment(by: 1.0)
@@ -126,6 +126,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             
             let responseString = String(data: data, encoding: .utf8)
             let result = responseString ?? "[Unknown]"
+            
             if (result.hasPrefix("{\"errors")) {
                 bssidData.Manufacturer = "[Error]"
             } else {

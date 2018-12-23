@@ -53,11 +53,11 @@ class WiFiData: NSObject {
     func securityImage() -> NSImage? {
         var image: NSImage? = nil
         if SecurityType.hasPrefix("WE") {
-            image = NSImage(named: NSImage.lockLockedTemplateName)
+            image = NSImage(named: "locked")
         } else if SecurityType.hasPrefix("WP") {
-            image = NSImage(named: NSImage.lockLockedTemplateName)
+            image = NSImage(named: "locked")
         } else {
-            image = NSImage(named: NSImage.lockUnlockedTemplateName)
+            image = NSImage(named: "unlocked")
         }
         return image
     }

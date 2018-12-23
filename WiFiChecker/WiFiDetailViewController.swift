@@ -187,7 +187,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             let cell: NSTableCellView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
             if (convertFromNSUserInterfaceItemIdentifier(tableColumn!.identifier) == "ssid") {
                 cell.textField?.stringValue = collocatedGroupData[row].ssid
-                cell.imageView?.image = collocatedGroupData[row].secure ? NSImage(named: NSImage.lockLockedTemplateName) : NSImage(named: NSImage.lockUnlockedTemplateName)
+                cell.imageView?.image = collocatedGroupData[row].secure ? NSImage(named: "locked") : NSImage(named: "unlocked")
             } else {
                 cell.textField?.stringValue = collocatedGroupData[row].lastConnectedString()
             }

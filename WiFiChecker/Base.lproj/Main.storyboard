@@ -270,23 +270,24 @@
                                                             <rect key="frame" x="1" y="1" width="445" height="60"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IhH-9f-cg7">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="IhH-9f-cg7">
                                                                     <rect key="frame" x="57" y="29" width="387" height="25"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="WiFi SSID" id="qtk-ge-88x">
                                                                         <font key="font" metaFont="system" size="21"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="reQ-vz-1Qu">
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="reQ-vz-1Qu">
                                                                     <rect key="frame" x="3" y="6" width="48" height="48"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSLockUnlockedTemplate" id="zJy-ea-Whf"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="48" id="4zM-5a-RET"/>
+                                                                        <constraint firstAttribute="width" constant="48" id="t27-QB-Gl8"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="unlocked" id="zJy-ea-Whf"/>
                                                                 </imageView>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wZF-hV-umf">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wZF-hV-umf">
                                                                     <rect key="frame" x="57" y="6" width="387" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Never from this device" id="ljL-0K-yyw">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -294,6 +295,19 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="wZF-hV-umf" firstAttribute="leading" secondItem="reQ-vz-1Qu" secondAttribute="trailing" constant="8" id="0q5-wb-rSU"/>
+                                                                <constraint firstItem="IhH-9f-cg7" firstAttribute="leading" secondItem="reQ-vz-1Qu" secondAttribute="trailing" constant="8" id="19n-zT-tMF"/>
+                                                                <constraint firstItem="wZF-hV-umf" firstAttribute="top" secondItem="IhH-9f-cg7" secondAttribute="bottom" constant="6" id="7wI-tJ-LOI"/>
+                                                                <constraint firstAttribute="trailing" secondItem="IhH-9f-cg7" secondAttribute="trailing" constant="3" id="Dqh-EF-FkV"/>
+                                                                <constraint firstItem="reQ-vz-1Qu" firstAttribute="leading" secondItem="J42-oY-JZt" secondAttribute="leading" constant="3" id="Ew9-u0-TJJ"/>
+                                                                <constraint firstItem="IhH-9f-cg7" firstAttribute="top" secondItem="J42-oY-JZt" secondAttribute="top" constant="6" id="GLi-If-9b8"/>
+                                                                <constraint firstAttribute="bottom" secondItem="reQ-vz-1Qu" secondAttribute="bottom" constant="6" id="Lcp-1k-MPC"/>
+                                                                <constraint firstItem="reQ-vz-1Qu" firstAttribute="top" secondItem="J42-oY-JZt" secondAttribute="top" constant="6" id="T6j-4z-j7e"/>
+                                                                <constraint firstItem="wZF-hV-umf" firstAttribute="top" secondItem="IhH-9f-cg7" secondAttribute="bottom" constant="6" id="cnl-oy-Gpx"/>
+                                                                <constraint firstAttribute="trailing" secondItem="wZF-hV-umf" secondAttribute="trailing" constant="3" id="eiW-Lv-5ve"/>
+                                                                <constraint firstAttribute="bottom" secondItem="wZF-hV-umf" secondAttribute="bottom" constant="6" id="i7p-dm-c5j"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <outlet property="lastTextField" destination="wZF-hV-umf" id="EBm-Is-fJV"/>
                                                                 <outlet property="ssidTextField" destination="IhH-9f-cg7" id="u3z-8v-z4k"/>
@@ -349,7 +363,7 @@
                                     <constraint firstAttribute="height" constant="48" id="1gj-lf-tX9"/>
                                     <constraint firstAttribute="width" constant="48" id="gFE-sb-iSW"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSLockUnlockedTemplate" id="d3M-rb-KOp"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="unlocked" id="d3M-rb-KOp"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8uc-jK-24K">
                                 <rect key="frame" x="74" y="355" width="408" height="25"/>
@@ -827,7 +841,7 @@
                                     </constraints>
                                 </view>
                             </box>
-                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="5" displayedWhenStopped="NO" bezeled="NO" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ivx-aK-SRK">
+                            <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="5" displayedWhenStopped="NO" bezeled="NO" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ivx-aK-SRK">
                                 <rect key="frame" x="97" y="152" width="149" height="12"/>
                             </progressIndicator>
                         </subviews>
@@ -891,11 +905,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AZ" width="512" height="512"/>
-        <image name="GYR" width="512" height="512"/>
+        <image name="AZ" width="1024" height="1024"/>
+        <image name="GYR" width="1024" height="1024"/>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSLockUnlockedTemplate" width="10" height="14"/>
-        <image name="PreferredOrder" width="512" height="512"/>
-        <image name="SortTimeAscending" width="512" height="512"/>
+        <image name="PreferredOrder" width="1024" height="1024"/>
+        <image name="SortTimeAscending" width="1024" height="1024"/>
+        <image name="unlocked" width="1024" height="1024"/>
     </resources>
 </document>

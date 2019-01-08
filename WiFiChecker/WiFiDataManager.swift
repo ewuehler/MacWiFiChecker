@@ -9,14 +9,17 @@
 import Foundation
 
 
+let AddedBy = "AddedBy"
 let AutoLogin = "AutoLogin"
 let BSSIDList = "BSSIDList"
 let Captive = "Captive"
+let CaptiveBypass = "CaptiveBypass"
 let ChannelHistory = "ChannelHistory"
 let Closed = "Closed"
 let CollocatedGroup = "CollocatedGroup"
 let Disabled = "Disabled"
 let LastConnected = "LastConnected"
+let NetworkWasCaptive = "NetworkWasCaptive"
 let Passpoint = "Passpoint"
 let PersonalHotspot = "PersonalHotspot"
 let PossiblyHiddenNetwork = "PossiblyHiddenNetwork"
@@ -25,8 +28,10 @@ let SPRoaming = "SPRoaming"
 let SSID = "SSID"
 let SSIDString = "SSIDString"
 let SecurityType = "SecurityType"
+let ShareMode = "ShareMode"
 let SystemMode = "SystemMode"
 let TemporarilyDisabled = "TemporarilyDisabled"
+let UserRole = "UserRole"
 
 let Channel = "Channel"
 let Timestamp = "Timestamp"
@@ -201,24 +206,29 @@ class WiFiDataManager {
             //print("value: \(valueDict)")
             let value = valueDict as! Dictionary<String,AnyObject>
             let wifidata = WiFiData(key)
+            wifidata.AddedBy = findInt(value[AddedBy])
             wifidata.AutoLogin = findBool(value[AutoLogin])
             wifidata.BSSIDList = findBSSIDList(value[BSSIDList])
             wifidata.Captive = findBool(value[Captive])
+            wifidata.CaptiveBypass = findBool(value[CaptiveBypass])
             wifidata.ChannelHistory = findChannelHistory(value[ChannelHistory])
             wifidata.Closed = findBool(value[Closed])
             wifidata.CollocatedGroup = findCollocatedGroup(value[CollocatedGroup])
             wifidata.Disabled = findBool(value[Disabled])
             wifidata.LastConnected = findDate(value[LastConnected])
+            wifidata.NetworkWasCaptive = findBool(value[NetworkWasCaptive])
             wifidata.Passpoint = findBool(value[Passpoint])
             wifidata.PersonalHotspot = findBool(value[PersonalHotspot])
             wifidata.PossiblyHiddenNetwork = findBool(value[PossiblyHiddenNetwork])
             wifidata.RoamingProfileType = findString(value[RoamingProfileType])
             wifidata.SecurityType = findString(value[SecurityType])
+            wifidata.ShareMode = findInt(value[ShareMode])
             wifidata.SPRoaming = findBool(value[SPRoaming])
             wifidata.SSID = findData(value[SSID])!
             wifidata.SSIDString = findString(value[SSIDString])
             wifidata.SystemMode = findBool(value[SystemMode])
             wifidata.TemporarilyDisabled = findBool(value[TemporarilyDisabled])
+            wifidata.UserRole = findInt(value[UserRole])
             
             _knownNetworks.append(wifidata)
             _allNetworks[key] = wifidata
@@ -366,15 +376,21 @@ class WiFiDataManager {
         }
         return response
     }
-    
+
     func stringAtRow(_ row: Int, key: String) -> String? {
         var response: String?
         switch key {
+        case AddedBy:
+            response = _knownNetworks[row].AddedBy.description
+            break
         case AutoLogin:
             response = _knownNetworks[row].AutoLogin.description
             break
         case Captive:
             response = _knownNetworks[row].Captive.description
+            break
+        case CaptiveBypass:
+            response = _knownNetworks[row].CaptiveBypass.description
             break
         case Closed:
             response = _knownNetworks[row].Closed.description
@@ -384,6 +400,9 @@ class WiFiDataManager {
             break
         case LastConnected:
             response = _knownNetworks[row].LastConnected?.description
+            break
+        case NetworkWasCaptive:
+            response = _knownNetworks[row].NetworkWasCaptive.description
             break
         case Passpoint:
             response = _knownNetworks[row].Passpoint.description
@@ -400,6 +419,9 @@ class WiFiDataManager {
         case SecurityType:
             response = _knownNetworks[row].SecurityType
             break
+        case ShareMode:
+            response = _knownNetworks[row].ShareMode.description
+            break
         case SPRoaming:
             response = _knownNetworks[row].SPRoaming.description
             break
@@ -415,12 +437,15 @@ class WiFiDataManager {
         case TemporarilyDisabled:
             response = _knownNetworks[row].TemporarilyDisabled.description
             break
+        case UserRole:
+            response = _knownNetworks[row].UserRole.description
+            break
         default:
             response = ""
         }
         return response
     }
-    
+
     fileprivate func appendDetail(_ first: Bool, note: String) -> (Bool, String) {
         var response = ""
         if first {
@@ -444,12 +469,20 @@ class WiFiDataManager {
             (first, response) = appendDetail(first, note:Captive)
             detailResponse += response
         }
+        if data.CaptiveBypass {
+            (first, response) = appendDetail(first, note:CaptiveBypass)
+            detailResponse += response
+        }
         if data.Closed {
             (first, response) = appendDetail(first, note:Closed)
             detailResponse += response
         }
         if data.Disabled {
             (first, response) = appendDetail(first, note:Disabled)
+            detailResponse += response
+        }
+        if data.NetworkWasCaptive {
+            (first, response) = appendDetail(first, note:NetworkWasCaptive)
             detailResponse += response
         }
         if data.Passpoint {

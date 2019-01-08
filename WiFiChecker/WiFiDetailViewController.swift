@@ -55,16 +55,22 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         securityTextField.stringValue = data.SecurityType
         lastConnectedTextField.stringValue = data.lastConnectedString()
         
+        propertiesData.append(WiFiProperty(key: "Added By", value: data.AddedBy))
         propertiesData.append(WiFiProperty(key: "Auto Login",value: data.AutoLogin))
         propertiesData.append(WiFiProperty(key: "Captive Portal",value: data.Captive))
+        propertiesData.append(WiFiProperty(key: "Captive Bypass", value: data.CaptiveBypass))
         propertiesData.append(WiFiProperty(key: "Closed",value: data.Closed))
         propertiesData.append(WiFiProperty(key: "Disabled",value: data.Disabled))
+        propertiesData.append(WiFiProperty(key: "NetworkWasCaptive", value: data.NetworkWasCaptive))
         propertiesData.append(WiFiProperty(key: "Passpoint",value: data.Passpoint))
         propertiesData.append(WiFiProperty(key: "Personal Hotspot",value: data.PersonalHotspot))
         propertiesData.append(WiFiProperty(key: "Possibly Hidden Network",value: data.PossiblyHiddenNetwork))
+        propertiesData.append(WiFiProperty(key: "Roaming Profile Type",value: data.RoamingProfileType))
+        propertiesData.append(WiFiProperty(key: "Share Mode", value: data.ShareMode))
         propertiesData.append(WiFiProperty(key: "SP Roaming",value: data.SPRoaming))
         propertiesData.append(WiFiProperty(key: "System Mode",value: data.SystemMode))
         propertiesData.append(WiFiProperty(key: "Temporarily Disabled",value: data.TemporarilyDisabled))
+        propertiesData.append(WiFiProperty(key: "User Role", value:data.UserRole))
         propertiesTableView.reloadData()
         
         channelHistoryData = data.ChannelHistory ?? []
@@ -168,9 +174,20 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         
             let cell:NSTableCellView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
             let prop: WiFiProperty = propertiesData[row]
-            cell.textField?.stringValue = prop.key
-            cell.textField?.textColor = prop.value ? NSColor.black : NSColor.gray
-            cell.imageView?.image = prop.value ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusNoneName)
+            cell.textField?.stringValue = prop.text()
+            if let boolval = prop.value as? Bool {
+                cell.textField?.textColor = boolval ? NSColor.black : NSColor.gray
+                cell.imageView?.image = boolval ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusNoneName)
+            } else if let intval = prop.value as? Int {
+                cell.textField?.textColor = (intval >= 0) ? NSColor.black : NSColor.gray
+                cell.imageView?.image = (intval >= 0) ? NSImage(named: NSImage.statusPartiallyAvailableName) : NSImage(named: NSImage.statusNoneName)
+            } else if prop.value is String {
+                cell.textField?.textColor = NSColor.black
+                cell.imageView?.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+            } else {
+                cell.textField?.textColor = NSColor.gray
+                cell.imageView?.image = NSImage(named: NSImage.statusNoneName)
+            }
             
             return cell
         } else if (tableView == channelHistoryTableView) {
@@ -225,11 +242,23 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
 
 class WiFiProperty {
     var key: String
-    var value: Bool
+    var value: Any
     
-    init(key: String, value: Bool) {
+    init(key: String, value: Any) {
         self.key = key
         self.value = value
+    }
+    
+    func text() -> String {
+        if self.value is Bool {
+            return self.key
+        } else if self.value is Int {
+            return "\(self.key) - (\(self.value))"
+        } else if self.value is String {
+            return "\(self.key): \(self.value)"
+        } else {
+            return ""
+        }
     }
 }
 

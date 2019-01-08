@@ -13,24 +13,29 @@ import AppKit
 class WiFiData: NSObject {
     
     var WiFiID: String = "InvalidID"
+    var AddedBy: Int = -1
     var AutoLogin: Bool = false
     var BSSIDList: Array<BSSIDData>? = nil
     var Captive: Bool = false
+    var CaptiveBypass: Bool = false
     var ChannelHistory: Array<ChannelData>? = nil
     var CollocatedGroup: Array<String>? = nil
     var Closed: Bool = false
     var Disabled: Bool = false
     var LastConnected: Date? = nil
+    var NetworkWasCaptive: Bool = false
     var Passpoint: Bool = false
     var PersonalHotspot: Bool = false
     var PossiblyHiddenNetwork: Bool = false
     var RoamingProfileType: String = ""
+    var ShareMode: Int = -1
     var SPRoaming: Bool = false
     var SSID: Data = Data() // Base64 Encoded SSID String
     var SSIDString: String = ""
     var SecurityType: String = ""
     var SystemMode: Bool = false
     var TemporarilyDisabled: Bool = false
+    var UserRole: Int = -1
     
     var CollocatedGroupDetails: Array<CollocatedGroupData> = []
     var SecurityTypeInt: Int = 0

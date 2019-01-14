@@ -46,6 +46,7 @@ class WiFiDataManager {
     
     fileprivate let systemConfigurationFolder = "/Library/Preferences/SystemConfiguration"
     fileprivate let airportPreferencesFile = "com.apple.airport.preferences.plist"
+    fileprivate let macAddress = CSVMACAddressParser()
     
     fileprivate var _contentPlist: String = ""
     fileprivate var _rawContent: NSDictionary?
@@ -124,6 +125,8 @@ class WiFiDataManager {
                 let bssid = BSSIDData()
                 bssid.LEAKY_AP_BSSID = findString(dict[LEAKY_AP_BSSID])
                 bssid.LEAKY_AP_LEARNED_DATA = findData(dict[LEAKY_AP_LEARNED_DATA])!
+                // Now find the Manufacturer
+                bssid.Manufacturer = self.macAddress.orgName(by: bssid.mac()) ?? ""
                 bssidList.append(bssid)
             }
         }
@@ -232,7 +235,7 @@ class WiFiDataManager {
             
             _knownNetworks.append(wifidata)
             _allNetworks[key] = wifidata
-            
+//            print("\(wifidata.SecurityType)")
             if (wifidata.SecurityType.hasPrefix("Open")) {
                 _openCount += 1
                 wifidata.SecurityTypeInt = 0

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B36EEE121EC3D8700132D04 /* mas.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7B36EEDE21EC3D8700132D04 /* mas.csv */; };
+		7B36EEE221EC3D8700132D04 /* mam.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7B36EEDF21EC3D8700132D04 /* mam.csv */; };
+		7B36EEE321EC3D8700132D04 /* mal.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7B36EEE021EC3D8700132D04 /* mal.csv */; };
+		7B36EEE521EC3F6200132D04 /* CSVMACAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36EEE421EC3F6200132D04 /* CSVMACAddressParser.swift */; };
+		7B36EEE721EC584900132D04 /* MACAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36EEE621EC584900132D04 /* MACAddress.swift */; };
 		7B3E4CB61E525F1F00BC802B /* HomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3E4CB51E525F1F00BC802B /* HomeWindowController.swift */; };
 		7B3E4CBA1E528CAE00BC802B /* TouchBarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3E4CB91E528CAE00BC802B /* TouchBarExtensions.swift */; };
 		7B3E4CBC1E52BE2300BC802B /* WiFiDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3E4CBB1E52BE2300BC802B /* WiFiDetailViewController.swift */; };
@@ -21,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B36EEDE21EC3D8700132D04 /* mas.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mas.csv; sourceTree = "<group>"; };
+		7B36EEDF21EC3D8700132D04 /* mam.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mam.csv; sourceTree = "<group>"; };
+		7B36EEE021EC3D8700132D04 /* mal.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mal.csv; sourceTree = "<group>"; };
+		7B36EEE421EC3F6200132D04 /* CSVMACAddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVMACAddressParser.swift; sourceTree = "<group>"; };
+		7B36EEE621EC584900132D04 /* MACAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACAddress.swift; sourceTree = "<group>"; };
 		7B3E4CB51E525F1F00BC802B /* HomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWindowController.swift; sourceTree = "<group>"; };
 		7B3E4CB91E528CAE00BC802B /* TouchBarExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarExtensions.swift; sourceTree = "<group>"; };
 		7B3E4CBB1E52BE2300BC802B /* WiFiDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiFiDetailViewController.swift; sourceTree = "<group>"; };
@@ -48,6 +58,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B36EEDD21EC39A700132D04 /* MACAddress */ = {
+			isa = PBXGroup;
+			children = (
+				7B36EEE021EC3D8700132D04 /* mal.csv */,
+				7B36EEDF21EC3D8700132D04 /* mam.csv */,
+				7B36EEDE21EC3D8700132D04 /* mas.csv */,
+				7B36EEE421EC3F6200132D04 /* CSVMACAddressParser.swift */,
+				7B36EEE621EC584900132D04 /* MACAddress.swift */,
+			);
+			path = MACAddress;
+			sourceTree = "<group>";
+		};
 		F360926D1E4D7DC300BA14E6 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +89,7 @@
 		F36092781E4D7DC300BA14E6 /* WiFiChecker */ = {
 			isa = PBXGroup;
 			children = (
+				7B36EEDD21EC39A700132D04 /* MACAddress */,
 				7B9D4FCA21D02B6D00433FE9 /* WiFi Checker.entitlements */,
 				F36092791E4D7DC300BA14E6 /* AppDelegate.swift */,
 				F360927D1E4D7DC300BA14E6 /* Assets.xcassets */,
@@ -153,6 +176,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B36EEE321EC3D8700132D04 /* mal.csv in Resources */,
+				7B36EEE221EC3D8700132D04 /* mam.csv in Resources */,
+				7B36EEE121EC3D8700132D04 /* mas.csv in Resources */,
 				F360927E1E4D7DC300BA14E6 /* Assets.xcassets in Resources */,
 				F36092811E4D7DC300BA14E6 /* Main.storyboard in Resources */,
 			);
@@ -168,8 +194,10 @@
 				F38A3E8B1E510A7500A46774 /* WiFiData.swift in Sources */,
 				F38A3E891E5107FC00A46774 /* WiFiDataManager.swift in Sources */,
 				7B3E4CB61E525F1F00BC802B /* HomeWindowController.swift in Sources */,
+				7B36EEE721EC584900132D04 /* MACAddress.swift in Sources */,
 				7B3E4CBA1E528CAE00BC802B /* TouchBarExtensions.swift in Sources */,
 				F360927C1E4D7DC300BA14E6 /* WiFiTableViewController.swift in Sources */,
+				7B36EEE521EC3F6200132D04 /* CSVMACAddressParser.swift in Sources */,
 				F3B9B24C1E4E782D0009586F /* WiFiTableCellView.swift in Sources */,
 				F3B9B24A1E4E39E20009586F /* HomeSplitViewController.swift in Sources */,
 				F360927A1E4D7DC300BA14E6 /* AppDelegate.swift in Sources */,

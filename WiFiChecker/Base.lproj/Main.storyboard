@@ -905,11 +905,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AZ" width="1024" height="1024"/>
-        <image name="GYR" width="1024" height="1024"/>
+        <image name="AZ" width="768" height="768"/>
+        <image name="GYR" width="768" height="768"/>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="PreferredOrder" width="1024" height="1024"/>
-        <image name="SortTimeAscending" width="1024" height="1024"/>
-        <image name="unlocked" width="1024" height="1024"/>
+        <image name="PreferredOrder" width="768" height="768"/>
+        <image name="SortTimeAscending" width="768" height="768"/>
+        <image name="unlocked" width="768" height="768"/>
     </resources>
 </document>

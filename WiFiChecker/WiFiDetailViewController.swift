@@ -55,22 +55,22 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         securityTextField.stringValue = data.SecurityType
         lastConnectedTextField.stringValue = data.lastConnectedString()
         
-        propertiesData.append(WiFiProperty(key: "Added By", value: data.AddedBy))
-        propertiesData.append(WiFiProperty(key: "Auto Login",value: data.AutoLogin))
-        propertiesData.append(WiFiProperty(key: "Captive Portal",value: data.Captive))
-        propertiesData.append(WiFiProperty(key: "Captive Bypass", value: data.CaptiveBypass))
-        propertiesData.append(WiFiProperty(key: "Closed",value: data.Closed))
-        propertiesData.append(WiFiProperty(key: "Disabled",value: data.Disabled))
-        propertiesData.append(WiFiProperty(key: "NetworkWasCaptive", value: data.NetworkWasCaptive))
-        propertiesData.append(WiFiProperty(key: "Passpoint",value: data.Passpoint))
-        propertiesData.append(WiFiProperty(key: "Personal Hotspot",value: data.PersonalHotspot))
-        propertiesData.append(WiFiProperty(key: "Possibly Hidden Network",value: data.PossiblyHiddenNetwork))
-        propertiesData.append(WiFiProperty(key: "Roaming Profile Type",value: data.RoamingProfileType))
-        propertiesData.append(WiFiProperty(key: "Share Mode", value: data.ShareMode))
-        propertiesData.append(WiFiProperty(key: "SP Roaming",value: data.SPRoaming))
-        propertiesData.append(WiFiProperty(key: "System Mode",value: data.SystemMode))
-        propertiesData.append(WiFiProperty(key: "Temporarily Disabled",value: data.TemporarilyDisabled))
-        propertiesData.append(WiFiProperty(key: "User Role", value:data.UserRole))
+        propertiesData.append(WiFiProperty(key: AddedBy, name: "Added By", value: data.AddedBy))
+        propertiesData.append(WiFiProperty(key: AutoLogin, name: "Auto Login",value: data.AutoLogin))
+        propertiesData.append(WiFiProperty(key: Captive, name: "Captive Portal",value: data.Captive))
+        propertiesData.append(WiFiProperty(key: CaptiveBypass, name: "Captive Bypass", value: data.CaptiveBypass))
+        propertiesData.append(WiFiProperty(key: Closed, name: "Closed",value: data.Closed))
+        propertiesData.append(WiFiProperty(key: Disabled, name: "Automatically join this network",value: data.Disabled))
+        propertiesData.append(WiFiProperty(key: NetworkWasCaptive, name: "Network Was Captive", value: data.NetworkWasCaptive))
+        propertiesData.append(WiFiProperty(key: Passpoint, name: "Passpoint",value: data.Passpoint))
+        propertiesData.append(WiFiProperty(key: PersonalHotspot, name: "Personal Hotspot",value: data.PersonalHotspot))
+        propertiesData.append(WiFiProperty(key: PossiblyHiddenNetwork, name: "Possibly Hidden Network",value: data.PossiblyHiddenNetwork))
+        propertiesData.append(WiFiProperty(key: RoamingProfileType, name: "Roaming Profile Type",value: data.RoamingProfileType))
+        propertiesData.append(WiFiProperty(key: ShareMode, name: "Share Mode", value: data.ShareMode))
+        propertiesData.append(WiFiProperty(key: SPRoaming, name: "SP Roaming",value: data.SPRoaming))
+        propertiesData.append(WiFiProperty(key: SystemMode, name: "System Mode",value: data.SystemMode))
+        propertiesData.append(WiFiProperty(key: TemporarilyDisabled, name: "Temporarily Disabled",value: data.TemporarilyDisabled))
+        propertiesData.append(WiFiProperty(key: UserRole, name: "User Role", value:data.UserRole))
         propertiesTableView.reloadData()
         
         channelHistoryData = data.ChannelHistory ?? []
@@ -82,6 +82,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
         bssidListData = data.BSSIDList ?? []
         bssidListTableView.reloadData()
         
+        /*
         bssidProgress.isHidden = false
         bssidProgress.minValue = 0.0
         bssidProgress.maxValue = Double(self.bssidListData.count)
@@ -112,7 +113,7 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             self.bssidProgress.isHidden = true
             self.bssidProgress.doubleValue = 0.0
         })
-
+        */
         
     }
     
@@ -176,14 +177,27 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
             let prop: WiFiProperty = propertiesData[row]
             cell.textField?.stringValue = prop.text()
             if let boolval = prop.value as? Bool {
-                cell.textField?.textColor = boolval ? NSColor.black : NSColor.gray
-                cell.imageView?.image = boolval ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusNoneName)
+                if (prop.key == Disabled) {
+                    cell.textField?.textColor = !boolval ? NSColor.black : NSColor.gray
+                    cell.imageView?.image = !boolval ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusNoneName)
+                } else {
+                    cell.textField?.textColor = boolval ? NSColor.black : NSColor.gray
+                    cell.imageView?.image = boolval ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusNoneName)
+                }
             } else if let intval = prop.value as? Int {
                 cell.textField?.textColor = (intval >= 0) ? NSColor.black : NSColor.gray
                 cell.imageView?.image = (intval >= 0) ? NSImage(named: NSImage.statusPartiallyAvailableName) : NSImage(named: NSImage.statusNoneName)
             } else if prop.value is String {
-                cell.textField?.textColor = NSColor.black
-                cell.imageView?.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+//                print("\(prop.key) - \(prop.value)")
+                if (prop.key == RoamingProfileType) {
+                    let propValue = "\(prop.value)"
+                    let isNone = (propValue == "None")
+                    cell.textField?.textColor = !isNone ? NSColor.black : NSColor.gray
+                    cell.imageView?.image = !isNone ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusNoneName)
+                } else {
+                    cell.textField?.textColor = NSColor.black
+                    cell.imageView?.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                }
             } else {
                 cell.textField?.textColor = NSColor.gray
                 cell.imageView?.image = NSImage(named: NSImage.statusNoneName)
@@ -242,20 +256,22 @@ class WiFiDetailViewController: NSViewController, NSTableViewDelegate, NSTableVi
 
 class WiFiProperty {
     var key: String
+    var name: String
     var value: Any
     
-    init(key: String, value: Any) {
+    init(key: String, name: String, value: Any) {
         self.key = key
+        self.name = name
         self.value = value
     }
     
     func text() -> String {
         if self.value is Bool {
-            return self.key
+            return self.name
         } else if self.value is Int {
-            return "\(self.key) - (\(self.value))"
+            return "\(self.name) - (\(self.value))"
         } else if self.value is String {
-            return "\(self.key): \(self.value)"
+            return "\(self.name): \(self.value)"
         } else {
             return ""
         }

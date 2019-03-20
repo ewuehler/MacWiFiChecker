@@ -6,3 +6,4 @@ WiFi Checker reads the `com.apple.airport.preferences.plist` and pulls the infor
 
 A fun little side project that tells you all the places your Mac has been.  Depending on how you have iCloud set up, it does appear that a number of your iOS WiFi connections can show up in this list as well.  
 
+![WiFi Checker](wificheck.png)
